@@ -1,0 +1,9 @@
+.sider-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .sider-logout {
+        margin: auto 0 0 0;
+    }
+}
