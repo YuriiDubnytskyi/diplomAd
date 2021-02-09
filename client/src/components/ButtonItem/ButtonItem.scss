@@ -1,0 +1,21 @@
+.btn-delete {
+    padding: 10px 20px;
+    background-color: rgb(155, 41, 41);
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #ffffff;
+
+    &:hover {
+        cursor: pointer;
+        background-color: lighten($color: rgb(155, 41, 41), $amount: 40);
+    }
+
+    &:focus {
+        display: none;
+    }
+
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}

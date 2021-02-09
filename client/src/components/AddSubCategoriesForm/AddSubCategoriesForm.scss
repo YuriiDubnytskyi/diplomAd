@@ -1,9 +1,11 @@
-.addcategorie-isimg {
+.addsubcategorie-isimg,
+.addsubcategorie-isgroup,
+.addsubcategories-categorie {
     display: flex;
     align-items: center;
     padding: 20px 0;
 }
-.addcategories-btn {
+.addsubcategories-btn {
     display: flex;
     justify-content: space-around;
 }

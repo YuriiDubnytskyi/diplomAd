@@ -1,6 +1,7 @@
 import React from "react";
 import AdminImageLoader from "./../../components/AdminImageLoader/AdminImageLoader";
 import { Form, Input, Button, Select } from "antd";
+import "./AddCategoriesForm.scss";
 
 const { Option } = Select;
 
@@ -35,16 +36,16 @@ const AddCategoriesForm = (props) => {
                     </Form.Item>
 
                     <div className="addcategorie-isimg">
-                        <Select
-                            defaultValue={props.isImg}
-                            style={{ width: 120 }}
-                            onChange={(va) => props.setIsImg(Boolean(va))}>
-                            <Option value="false">false</Option>
-                            <Option value="true">true</Option>
+                        <div>
+                            <p className="addcategorie__select-title">Do you have image ?</p>
+                        </div>
+                        <Select defaultValue={props.isImg} style={{ width: 120 }} onChange={(va) => props.setIsImg(va)}>
+                            <Option value={false}>false</Option>
+                            <Option value={true}>true</Option>
                         </Select>
                     </div>
 
-                    <div>
+                    <div className="addcategorie-images">
                         <AdminImageLoader setImagesArray={props.setImagesArray} />
                     </div>
 

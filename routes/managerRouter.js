@@ -29,8 +29,7 @@ router.post("/createProductMain", async (req, res) => {
     res.json(result);
 });
 
-router.post("/createProductSubMain", (req, res) => {
-    console.log(req.body);
+router.post("/createProductSubMain", async (req, res) => {
     const productSubMain = {
         productSubTitle: req.body.productSubTitle,
         idProductTitle: req.body.idProductTitle,
@@ -38,7 +37,7 @@ router.post("/createProductSubMain", (req, res) => {
         imgSrc: req.body.imgSrc,
         imgFolder: req.body.imgFolder,
     };
-    const result = createProductSubMain(productSubMain).then((data) =>
+    const result = await createProductSubMain(productSubMain).then((data) =>
         data.err ? { err: true, errMess: data.errMess } : data
     );
     res.json(result);
@@ -46,28 +45,29 @@ router.post("/createProductSubMain", (req, res) => {
 
 router.post("/createProductInfo", async (req, res) => {
     console.log(req.body);
+    const { idSubProduct, name, price, shortInfo, image, info, imgFolder, producer, properties } = req.body;
     const productList = {
-        name: req.body.name,
-        price: req.body.price,
-        shortInfo: req.body.shortInfo,
-        idSubProduct: req.body.idSubProduct,
-        imageMain: req.body.image[0],
+        name,
+        price,
+        shortInfo,
+        idSubProduct,
+        imageMain: image[0],
     };
 
     const productInfo = {
         idProduct: "",
-        name: req.body.name,
-        price: req.body.price,
-        info: req.body.info,
-        images: req.body.image,
-        imgFolder: req.body.imgFolder,
-        producer: req.body.producer,
-        properties: req.body.properties,
+        name,
+        price,
+        info,
+        images: image,
+        imgFolder,
+        producer,
+        properties,
     };
 
     const storageInfo = {
         idStorageHouse: "",
-        name: req.body.name,
+        name,
         count: 0,
     };
 
@@ -77,12 +77,11 @@ router.post("/createProductInfo", async (req, res) => {
     res.json(result);
 });
 
-router.put("/addCount", (req, res) => {
-    console.log(req.body);
+router.put("/addCount", async (req, res) => {
     const id = req.body.id;
     const count = req.body.count;
 
-    const result = addCount(id, count).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
+    const result = await addCount(id, count).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
     res.json(result);
 });
 

@@ -11,7 +11,7 @@ const userAdminSchema = require("../models/userAdmin");
 const getInit = async () => {
     try {
         const Main = productTitleSchema;
-        let products = Main.aggregate([
+        let data = await Main.aggregate([
             {
                 $lookup: {
                     from: "productSubTitle",
@@ -34,7 +34,6 @@ const getInit = async () => {
                                             as: "productDetail",
                                         },
                                     },
-
                                     {
                                         $lookup: {
                                             from: "storageHouse",
@@ -54,7 +53,7 @@ const getInit = async () => {
                 },
             },
         ]);
-        return { err: false, data: products };
+        return { err: false, data };
     } catch (error) {
         return { err: true, errMess: error };
     }
@@ -63,7 +62,7 @@ const getInit = async () => {
 const createProductMain = async (data) => {
     try {
         const Main = new productTitleSchema(data);
-        let product = Main.save();
+        let product = await Main.save();
         return { err: false, data: product };
     } catch (error) {
         return { err: true, errMess: error };
@@ -73,7 +72,7 @@ const createProductMain = async (data) => {
 const createProductSubMain = async (data) => {
     try {
         const SubMain = new productSubTitleSchema(data);
-        let product = SubMain.save();
+        let product = await SubMain.save();
         return { err: false, data: product };
     } catch (error) {
         return { err: true, errMess: error };
@@ -103,11 +102,10 @@ const addCount = async (id, count) => {
     try {
         const wereHouse = wereHouseSchema;
         let storage = await wereHouse.findOneAndUpdate(
-            { _id: id },
+            { idStorageHouse: id },
             { count: count },
             { new: true, useFindAndModify: false }
         );
-
         return { err: false, storage };
     } catch (error) {
         return { err: true, errMess: error };

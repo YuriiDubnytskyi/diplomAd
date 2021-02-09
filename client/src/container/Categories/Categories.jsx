@@ -1,15 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Categories.scss";
+import { useSelector } from "react-redux";
+import ManagerItem from "./../../components/ManagerItem/ManagerItem";
+import AddNewBtn from "./../../components/AddNewBtn/AddNewBtn";
 
 const Categories = () => {
+    const products = useSelector((state) => state.manager.fullProducts);
+
+    const deleteCategories = (id) => {
+        console.log("delete" + id);
+    };
+
     return (
         <div>
-            <div className="add_categories">
-                <Link to="addcategories" className="plus">
-                    +
-                </Link>
+            <div className="categories__list">
+                {products.map((el) => (
+                    <ManagerItem
+                        key={el._id}
+                        loading="false"
+                        title={el.productTitle}
+                        del={() => deleteCategories(el._id)}
+                    />
+                ))}
             </div>
+
+            <AddNewBtn link="addcategories" />
         </div>
     );
 };

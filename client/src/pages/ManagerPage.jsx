@@ -7,6 +7,13 @@ import { useDispatch } from "react-redux";
 import { clearManager, initManagerData } from "./../store/actions/actionManager";
 import Categories from "../container/Categories/Categories";
 import AddCategories from "../container/AddCategories/AddCategories";
+import SubCategories from "../container/SubCategories/SubCategories";
+import AddSubCategories from "../container/AddSubCategories/AddSubCategories";
+import Products from "../container/Products/Products";
+import AddProduct from "../container/AddProduct/AddProduct";
+import ProductItem from "../container/ProductItem/ProductItem";
+import BuyProduct from "../container/BuyProduct/BuyProduct";
+import ChangeProduct from "../container/ChangeProduct/ChangeProduct";
 
 const { Content } = Layout;
 
@@ -73,13 +80,27 @@ const ManagerPage = () => {
                     <Route path="/addcategories">
                         <AddCategories />
                     </Route>
-                    <Route path="/subcategorie"></Route>
-                    <Route path="/addsubcategorie"></Route>
-                    <Route path="/products"></Route>
-                    <Route path="/addproducts"></Route>
-                    <Route path="/buyproduct"></Route>
-                    <Route path="/infoproduct/:id"></Route>
-                    <Route path="/changeproduct/:id"></Route>
+                    <Route path="/subcategorie">
+                        <SubCategories />
+                    </Route>
+                    <Route path="/addsubcategorie">
+                        <AddSubCategories />
+                    </Route>
+                    <Route path="/products">
+                        <Products />
+                    </Route>
+                    <Route path="/addproduct">
+                        <AddProduct />
+                    </Route>
+                    <Route path="/buyproduct">
+                        <BuyProduct />
+                    </Route>
+                    <Route path="/infoproduct/:id">
+                        <ProductItem />
+                    </Route>
+                    <Route path="/changeproduct/:id">
+                        <ChangeProduct />
+                    </Route>
                     <Route path="/"></Route>
                 </Content>
             </Layout>
