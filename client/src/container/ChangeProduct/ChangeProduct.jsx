@@ -10,12 +10,12 @@ import ChangeProductInfoForm from "./../../components/ChangeProductInfoForm/Chan
 import AddProductProperties from "./../../components/AddProductProperties/AddProductProperties";
 import AdminImageLoader from "./../../components/AdminImageLoader/AdminImageLoader";
 import ChangeProperties from "./../../components/ChangeProperties/ChangeProperties";
+import API from "./../../API/API";
 
 const { Step } = Steps;
 
 const AddProduct = () => {
     const { id } = useParams();
-
     const data = useSelector((state) => state.manager);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -32,7 +32,9 @@ const AddProduct = () => {
                             producer: product.productDetail[0].producer,
                         });
                         setLoading(false);
-                        setUpdateProperty(product.productDetail[0].properties[0].properties);
+                        product.productDetail[0].properties === null
+                            ? setUpdateProperty([])
+                            : setUpdateProperty(product.productDetail[0].properties);
                     }
                 })
             )
@@ -46,7 +48,7 @@ const AddProduct = () => {
     const [step, setStep] = useState(0);
     const [properties, setProperties] = useState([]);
     const [info, setInfo] = useState("");
-    const [idSubProduct, setIdSubProduct] = useState(id);
+    const [idListProduct, setIdListProduct] = useState(id);
     const [imgSrc, setImgSrc] = useState([]);
     const [skip, setSkip] = useState(false);
     const [updateProperty, setUpdateProperty] = useState([]);
@@ -73,7 +75,7 @@ const AddProduct = () => {
     };
 
     const onFinishProperty = (values) => {
-        setProperties(values);
+        setProperties(values.properties);
     };
 
     const onFinishPropertyFinaly = () => {
@@ -88,31 +90,33 @@ const AddProduct = () => {
         setStep(step + 1);
         setSkip(true);
     };
-    const setImage = () => {
+    const setImage = async () => {
         let arr = [];
         let data;
-        imagesArray.forEach(async (el) => {
-            data = new FormData();
-            data.append("file", el.originFileObj);
-            data.append("upload_preset", "diploma");
-            data.append("folder", `/product/${info.name}`);
-            data.append("tags", `${info.name}`);
-            await axios.post("https://api.cloudinary.com/v1_1/yu7799/image/upload", data).then((res) => {
-                console.log(res);
-                arr.push(res.data.url);
-                if (arr.length === imagesArray.length) {
-                    setImgSrc(arr);
-                    setStep(step + 1);
-                }
-            });
-        });
+        //const result = await API.delete("/manager/deleteByTag/" + "Nokia").then((res) => console.log(res));
+
+        // imagesArray.forEach(async (el) => {
+        //     data = new FormData();
+        //     data.append("file", el.originFileObj);
+        //     data.append("upload_preset", "diploma");
+        //     data.append("folder", `/product/${info.name}`);
+        //     data.append("tags", `${info.name}`);
+        //     await axios.post("https://api.cloudinary.com/v1_1/yu7799/image/upload", data).then((res) => {
+        //         console.log(res);
+        //         arr.push(res.data.url);
+        //         if (arr.length === imagesArray.length) {
+        //             setImgSrc(arr);
+        //             setStep(step + 1);
+        //         }
+        //     });
+        // });
     };
 
     const onFinish = () => {
         dispatch(
             changeProductInfo(
                 {
-                    idSubProduct,
+                    idListProduct,
                     name: info.name,
                     price: info.price,
                     shortInfo: info.shortInfo,
@@ -123,7 +127,7 @@ const AddProduct = () => {
                     producer: info.producer,
                     propertiesFinaly,
                 },
-                idSubProduct
+                idListProduct
             )
         );
     };
@@ -156,7 +160,7 @@ const AddProduct = () => {
                 return (
                     <>
                         <AdminImageLoader setImagesArray={setImagesArray} />
-                        <Button onClick={setImage}>Submit</Button>
+                        {/* <Button onClick={setImage}>Submit</Button> */}
                         <Button onClick={skipImage}>Skip</Button>
                     </>
                 );

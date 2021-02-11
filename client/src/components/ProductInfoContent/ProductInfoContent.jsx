@@ -29,7 +29,7 @@ const ProductInfoContent = ({ data }) => {
                 <h3 className="product-info-properties">Properties</h3>
                 <div className="product-properties__container">
                     {data.properties
-                        ? data.properties[0].properties.map((el, i) => {
+                        ? data.properties.map((el, i) => {
                               return (
                                   <div className="product-properties-item" key={i}>
                                       <p className="item-property">{el.property}</p>

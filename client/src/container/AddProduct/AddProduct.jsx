@@ -55,7 +55,7 @@ const AddProduct = () => {
     const setImage = () => {
         let arr = [];
         let data;
-        imagesArray.forEach(async (el, i) => {
+        imagesArray.forEach(async (el) => {
             data = new FormData();
             data.append("file", el.originFileObj);
             data.append("upload_preset", "diploma");

@@ -112,10 +112,78 @@ const addCount = async (id, count) => {
     }
 };
 
+const changeProductInfo = async (productList, productInfo, idListProduct) => {
+    try {
+        const List = productListSchema;
+        let list = await List.findOneAndUpdate(
+            { _id: idListProduct },
+            { ...productList },
+            { new: true, useFindAndModify: false }
+        );
+
+        const productI = productInfoSchema;
+        let product = await productI.findOneAndUpdate(
+            { idProduct: idListProduct },
+            { ...productInfo },
+            { new: true, useFindAndModify: false }
+        );
+
+        return { err: false, list, product };
+    } catch (error) {
+        return { err: true, errMess: error };
+    }
+};
+
+const deleteProductFromList = async (id) => {
+    try {
+        const List = productListSchema;
+        const list = await List.deleteOne({ _id: id });
+
+        return { err: false, list };
+    } catch (error) {
+        return { err: true, errMess: error };
+    }
+};
+
+const deleteSubProduct = async (id) => {
+    try {
+        const SubMain = productSubTitleSchema;
+        let product = await SubMain.deleteOne({ _id: id });
+
+        const List = productListSchema;
+        let list = await List.deleteMany({ idSubProduct: id });
+
+        return { err: false, product, list };
+    } catch (error) {
+        return { err: true, errMess: error };
+    }
+};
+
+const deleteTitleProduct = async (id, arr) => {
+    try {
+        const Main = productTitleSchema;
+        let product = await Main.deleteOne({ _id: id });
+
+        const SubMain = productSubTitleSchema;
+        let subProduct = await SubMain.deleteMany({ idProductTitle: id });
+
+        const List = productListSchema;
+        let list = await List.deleteMany({ idSubProduct: { $in: arr } });
+
+        return { err: false, product, list, subProduct };
+    } catch (error) {
+        return { err: true, errMess: error };
+    }
+};
+
 module.exports = {
     getInit,
     createProductMain,
     createProductSubMain,
     createProductList,
     addCount,
+    changeProductInfo,
+    deleteProductFromList,
+    deleteSubProduct,
+    deleteTitleProduct,
 };

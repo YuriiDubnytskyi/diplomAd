@@ -16,6 +16,7 @@ const App = () => {
         //         dispatch(addUserSuccess(res.data.user));
         //     }
         // });
+        console.log(process.env.REACT_APP_SERVER_API);
     }, []);
 
     return (

@@ -5,8 +5,14 @@ const {
     createProductSubMain,
     createProductList,
     addCount,
+    changeProductInfo,
+    deleteProductFromList,
+    deleteSubProduct,
+    deleteTitleProduct,
 } = require("../services/managerService.js");
 const router = Router();
+
+const cloudinary = require("cloudinary").v2;
 
 router.get("/init", async (req, res) => {
     const initData = await getInit().then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
@@ -62,7 +68,7 @@ router.post("/createProductInfo", async (req, res) => {
         images: image,
         imgFolder,
         producer,
-        properties,
+        properties: properties.properties,
     };
 
     const storageInfo = {
@@ -82,6 +88,62 @@ router.put("/addCount", async (req, res) => {
     const count = req.body.count;
 
     const result = await addCount(id, count).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
+    res.json(result);
+});
+
+router.delete("/deleteByTag/:tag", async (req, res) => {
+    const tag = req.params.tag;
+    const result = await cloudinary.api.delete_resources_by_tag(tag);
+
+    res.json(result);
+});
+
+router.put("/changeProductInfo", async (req, res) => {
+    const { idListProduct, price, shortInfo, info, producer, propertiesFinaly } = req.body;
+    const productList = {
+        price,
+        shortInfo,
+    };
+
+    const productInfo = {
+        idProduct: idListProduct,
+        price,
+        info,
+        producer,
+        properties: propertiesFinaly,
+    };
+
+    const result = await changeProductInfo(productList, productInfo, idListProduct).then((data) =>
+        data.err ? { err: true, errMess: data.errMess } : data
+    );
+    res.json(result);
+});
+
+router.delete("/deleteProductFromList/:id", async (req, res) => {
+    const id = req.params.id;
+
+    const result = await deleteProductFromList(id).then((data) =>
+        data.err ? { err: true, errMess: data.errMess } : data
+    );
+
+    res.json(result);
+});
+
+router.delete("/deleteSubProduct/:id", async (req, res) => {
+    const id = req.params.id;
+
+    const result = await deleteSubProduct(id).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
+
+    res.json(result);
+});
+
+router.post("/deleteTitleProduct", async (req, res) => {
+    const { id, arrId } = req.body;
+
+    const result = await deleteTitleProduct(id, arrId).then((data) =>
+        data.err ? { err: true, errMess: data.errMess } : data
+    );
+
     res.json(result);
 });
 

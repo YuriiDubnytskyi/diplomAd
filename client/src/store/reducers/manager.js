@@ -20,6 +20,16 @@ const initialState = {
     changeProductErr: false,
     changeProductErrMess: "",
     changeProductLoading: false,
+
+    deleteMainLoading: false,
+    deleteMainErr: false,
+    deleteMainErrMess: "",
+    deleteSubLoading: false,
+    deleteSubErr: false,
+    deleteSubErrMess: "",
+    deleteProductErr: false,
+    deleteProductErrMess: "",
+    deleteProductLoading: false,
 };
 
 const setMain = (item, arr) => {
@@ -39,13 +49,36 @@ const setProduct = (id, data, arr) => {
     return arr.map((el) => {
         el.subTitle.map((el) => {
             if (el._id === id) {
-                el.product.push({ ...data.list, productDetail: data.product, productStorageHouse: data.storage });
+                el.product.push({
+                    ...data.list,
+                    productDetail: [{ ...data.product }],
+                    productStorageHouse: data.storage,
+                });
             }
+            return el;
         });
+        return el;
     });
 };
 
-const setProductChange = () => {};
+const setProductChange = (id, data, arr) => {
+    return arr.map((el) => {
+        el.subTitle.map((el1) => {
+            el1.product.map((el2, i) => {
+                if (el2._id === id) {
+                    el1.product[i] = {
+                        ...data.list,
+                        productDetail: [{ ...data.product }],
+                        productStorageHouse: el2.productStorageHouse,
+                    };
+                }
+                return el2;
+            });
+            return el1;
+        });
+        return el;
+    });
+};
 
 const setCount = (id, count, arr) => {
     let xxx = arr.map((el) => {
@@ -62,6 +95,27 @@ const setCount = (id, count, arr) => {
     });
     console.log(xxx);
     return xxx;
+};
+
+const deleteMain = (id, arr) => {
+    return arr.filter((el) => el._id != id);
+};
+
+const deleteSubMain = (id, arr) => {
+    return arr.map((el) => {
+        el.subTitle = el.subTitle.filter((el1) => el1._id != id);
+        return el;
+    });
+};
+
+const deleteProduct = (id, arr) => {
+    return arr.map((el) => {
+        el.subTitle.map((el1) => {
+            el1.product = el1.product.filter((el2) => el2._id != id);
+            return el1;
+        });
+        return el;
+    });
 };
 
 const manager = (state = initialState, action) => {
@@ -157,6 +211,57 @@ const manager = (state = initialState, action) => {
                 changeProductErr: false,
                 changeProductLoading: false,
                 fullProducts: setProductChange(action.id, action.data, state.fullProducts),
+            });
+
+        case actionTypes.DELETE_CATEGORY:
+            return updateObject(state, {
+                deleteMainLoading: true,
+            });
+        case actionTypes.DELETE_CATEGORY_FAIL:
+            return updateObject(state, {
+                deleteMainLoading: false,
+                deleteMainErrMess: action.mess,
+                deleteMainErr: true,
+            });
+        case actionTypes.DELETE_CATEGORY_SUCCESS:
+            return updateObject(state, {
+                deleteMainErr: false,
+                deleteMainLoading: false,
+                fullProducts: deleteMain(action.id, state.fullProducts),
+            });
+
+        case actionTypes.DELETE_SUB_CATEGORY:
+            return updateObject(state, {
+                deleteSubLoading: true,
+            });
+        case actionTypes.DELETE_SUB_CATEGORY_FAIL:
+            return updateObject(state, {
+                deleteSubLoading: false,
+                deleteSubErrMess: action.mess,
+                deleteSubErr: true,
+            });
+        case actionTypes.DELETE_SUB_CATEGORY_SUCCESS:
+            return updateObject(state, {
+                deleteSubErr: false,
+                deleteSubLoading: false,
+                fullProducts: deleteSubMain(action.id, state.fullProducts),
+            });
+
+        case actionTypes.DELETE_PRODUCT:
+            return updateObject(state, {
+                deleteProductLoading: true,
+            });
+        case actionTypes.DELETE_PRODUCT_FAIL:
+            return updateObject(state, {
+                deleteProductLoading: false,
+                deleteProductErrMess: action.mess,
+                deleteProductErr: true,
+            });
+        case actionTypes.DELETE_PRODUCT_SUCCESS:
+            return updateObject(state, {
+                deleteProductErr: false,
+                deleteProductLoading: false,
+                fullProducts: deleteProduct(action.id, state.fullProducts),
             });
 
         default:

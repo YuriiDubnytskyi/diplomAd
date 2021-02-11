@@ -194,3 +194,99 @@ export const changeProductFail = (mess) => {
         mess,
     };
 };
+
+export const deleteProductMain = (id, arrId) => {
+    return function (dispatch) {
+        dispatch(deleteCategory());
+        return API.post("/manager/deleteTitleProduct", { id, arrId }).then((res) => {
+            console.log(res);
+            if (res.data.err) {
+                dispatch(deleteCategoryFail(res.data.errMess));
+            } else {
+                dispatch(deleteCategorySuccess(id));
+            }
+        });
+    };
+};
+
+export const deleteCategory = () => {
+    return {
+        type: actionTypes.DELETE_CATEGORY,
+    };
+};
+export const deleteCategorySuccess = (id) => {
+    return {
+        type: actionTypes.DELETE_CATEGORY_SUCCESS,
+        id,
+    };
+};
+export const deleteCategoryFail = (mess) => {
+    return {
+        type: actionTypes.DELETE_CATEGORY_FAIL,
+        mess,
+    };
+};
+
+export const deleteProductSubMain = (id) => {
+    return function (dispatch) {
+        dispatch(deleteSubCategory());
+        return API.delete("/manager/deleteSubProduct/" + id).then((res) => {
+            console.log(res);
+            if (res.data.err) {
+                dispatch(deleteSubCategoryFail(res.data.errMess));
+            } else {
+                dispatch(deleteSubCategorySuccess(id));
+            }
+        });
+    };
+};
+
+export const deleteSubCategory = () => {
+    return {
+        type: actionTypes.DELETE_SUB_CATEGORY,
+    };
+};
+export const deleteSubCategorySuccess = (id) => {
+    return {
+        type: actionTypes.DELETE_SUB_CATEGORY_SUCCESS,
+        id,
+    };
+};
+export const deleteSubCategoryFail = (mess) => {
+    return {
+        type: actionTypes.DELETE_SUB_CATEGORY_FAIL,
+        mess,
+    };
+};
+
+export const deleteProductInfo = (id) => {
+    return function (dispatch) {
+        dispatch(deleteProduct());
+        return API.delete("/manager/deleteProductFromList/" + id).then((res) => {
+            console.log(res);
+            if (res.data.err) {
+                dispatch(deleteProductFail(res.data.errMess));
+            } else {
+                dispatch(deleteProductSuccess(id));
+            }
+        });
+    };
+};
+
+export const deleteProduct = () => {
+    return {
+        type: actionTypes.DELETE_PRODUCT,
+    };
+};
+export const deleteProductSuccess = (id) => {
+    return {
+        type: actionTypes.DELETE_PRODUCT_SUCCESS,
+        id,
+    };
+};
+export const deleteProductFail = (mess) => {
+    return {
+        type: actionTypes.DELETE_PRODUCT_FAIL,
+        mess,
+    };
+};
