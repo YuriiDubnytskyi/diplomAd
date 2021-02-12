@@ -7,6 +7,7 @@ import { initAdminData, removeAdmin } from "./../store/actions/actionAdmin";
 import { useDispatch, useSelector } from "react-redux";
 import AdminRoles from "./../container/AdminRoles/AdminRoles";
 import AddRole from "./../container/AddRole/AddRole";
+import AllProducts from "./../container/AllProducts/AllProducts";
 
 const { Content } = Layout;
 
@@ -53,7 +54,9 @@ const AdminPage = () => {
                     </Route>
                     <Route path="/users"></Route>
                     <Route path="/user/:id"></Route>
-                    <Route path="/products"></Route>
+                    <Route path="/products">
+                        <AllProducts />
+                    </Route>
                     <Route path="/"></Route>
                 </Content>
             </Layout>

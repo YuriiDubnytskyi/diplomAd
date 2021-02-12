@@ -28,31 +28,26 @@ const getUsers = async () => {
     }
 };
 
-const getUsersById = async (id) => {
-    try {
-        const Users = userSchema;
-        const usersList = await Users.findOne({ _id: id });
-        return { err: false, data: usersList };
-    } catch (error) {
-        return { err: true, errMess: error };
-    }
-};
-
 const getProducts = async () => {
     try {
         const Main = productTitleSchema;
-        let products = Main.aggregate([
+        let products = await Main.aggregate([
+            { $project: { productTitle: 1 } },
             {
                 $lookup: {
                     from: "productSubTitle",
                     let: { idSub: "$_id" },
                     pipeline: [
                         { $match: { $expr: { $eq: ["$idProductTitle", "$$idSub"] } } },
+                        { $project: { productSubTitle: 1 } },
                         {
                             $lookup: {
                                 from: "productList",
                                 let: { listId: "$_id" },
-                                pipeline: [{ $match: { $expr: { $eq: ["$idSubProduct", "$$listId"] } } }],
+                                pipeline: [
+                                    { $match: { $expr: { $eq: ["$idSubProduct", "$$listId"] } } },
+                                    { $project: { name: 1 } },
+                                ],
                                 as: "product",
                             },
                         },
@@ -81,6 +76,5 @@ module.exports = {
     getRoles,
     getUsers,
     getProducts,
-    getUsersById,
     deleteRole,
 };

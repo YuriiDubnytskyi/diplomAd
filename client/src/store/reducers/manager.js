@@ -52,7 +52,7 @@ const setProduct = (id, data, arr) => {
                 el.product.push({
                     ...data.list,
                     productDetail: [{ ...data.product }],
-                    productStorageHouse: data.storage,
+                    productStorageHouse: [{ ...data.storage }],
                 });
             }
             return el;

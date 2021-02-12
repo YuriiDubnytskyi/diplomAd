@@ -45,7 +45,7 @@ const AddSubCategories = () => {
         }
         const subList = data.fullProducts.filter((el) => el._id === idSubProduct);
         console.log(subList);
-        if (subList[0].subList && subList[0].length !== 0) {
+        if (subList[0].subTitle && subList[0].length !== 0) {
             if (subList[0].subTitle.some((el) => el.productSubTitle === values.productSubTitle)) {
                 return dispatch(addSubCategoryFail("SubTitle is already exist"));
             }
