@@ -62,7 +62,6 @@ const AddSubCategories = () => {
                 imgSrc,
                 imgFolder: values.imgFolder,
                 isGroup,
-                groupName: values.groupName,
             })
         );
     };

@@ -33,7 +33,7 @@ const Main = () => {
                     <AnaliticPage />
                 </Suspense>
             ) : null}
-            {role === "admin" ? (
+            {role === "sellingman" ? (
                 <Suspense fallback={<>Loading...</>}>
                     <SellingPage />
                 </Suspense>

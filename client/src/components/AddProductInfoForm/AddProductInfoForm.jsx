@@ -41,7 +41,6 @@ const AddProductInfoForm = ({
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 initialValues={{
-                    imgFolder: "",
                     groupName: "",
                 }}>
                 <div className="addproductinfo-labels">
@@ -83,7 +82,9 @@ const AddProductInfoForm = ({
                         ]}>
                         <Input className="addproductinfo-input" />
                     </Form.Item>
-
+                    <Form.Item className="addsubcategorie-groupname" label="Group Name" name="groupName">
+                        <Input className="addsubcategorie-input" />
+                    </Form.Item>
                     <Form.Item
                         className="addproductinfo-title"
                         label="Product ShortInfo"

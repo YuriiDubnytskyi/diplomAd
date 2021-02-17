@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AdminRoles from "./../container/AdminRoles/AdminRoles";
 import AddRole from "./../container/AddRole/AddRole";
 import AllProducts from "./../container/AllProducts/AllProducts";
+import UsersList from "./../container/UsersList/UsersList";
+import UserInfo from "./../container/UserInfo/UserInfo";
 
 const { Content } = Layout;
 
@@ -17,6 +19,7 @@ const AdminPage = () => {
     useEffect(() => {
         dispatch(initAdminData());
     }, []);
+
     const items = [
         {
             to: "/roles",
@@ -52,8 +55,12 @@ const AdminPage = () => {
                         <AdminRoles roles={admin.roles} />
                         <AddRole />
                     </Route>
-                    <Route path="/users"></Route>
-                    <Route path="/user/:id"></Route>
+                    <Route path="/user/:id">
+                        <UserInfo />
+                    </Route>
+                    <Route path="/users">
+                        <UsersList />
+                    </Route>
                     <Route path="/products">
                         <AllProducts />
                     </Route>

@@ -10,11 +10,13 @@ import { Provider } from "react-redux";
 import user from "./store/reducers/user";
 import admin from "./store/reducers/admin";
 import manager from "./store/reducers/manager";
+import selling from "./store/reducers/selling";
 
 const rootReducer = combineReducers({
     user,
     admin,
     manager,
+    selling,
 });
 
 const logger = (store) => {
