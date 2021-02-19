@@ -2,6 +2,18 @@ const { Router } = require("express");
 const { getInit, switchProduct } = require("../services/sellingService.js");
 const router = Router();
 const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+const oauth2Client = new OAuth2(
+    process.env.EMAIL_ID,
+    process.env.EMAIL_SECRET,
+    "https://developers.google.com/oauthplayground"
+);
+
+oauth2Client.setCredentials({
+    refresh_token: process.env.EMAIL_REFRESH,
+});
 
 router.get("/init", async (req, res) => {
     const initData = await getInit().then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
@@ -13,12 +25,24 @@ router.post("/switch", async (req, res) => {
     const id = req.body.id;
     const options = req.body.options;
     const result = await switchProduct(id).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
-
+    const accessToken = oauth2Client.getAccessToken();
+    
     const transporter = nodemailer.createTransport({
         service: "gmail",
+        // auth: {
+        //     user: process.env.EMAIL_ADRESS,
+        //     pass: process.env.EMAIL_PASSWORD,
+        // },
         auth: {
+            type: "OAuth2",
             user: process.env.EMAIL_ADRESS,
-            pass: process.env.EMAIL_PASSWORD,
+            clientId: process.env.EMAIL_ID,
+            clientSecret: process.env.EMAIL_SECRET,
+            refreshToken: process.env.EMAIL_REFRESH,
+            accessToken: accessToken,
+        },
+        tls: {
+            rejectUnauthorized: false,
         },
     });
 
