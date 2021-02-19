@@ -28,17 +28,17 @@ const Main = () => {
                     <ManagerPage />
                 </Suspense>
             ) : null}
-            {role === "admin" ? (
+            {role === "analitic" ? (
                 <Suspense fallback={<>Loading...</>}>
                     <AnaliticPage />
                 </Suspense>
             ) : null}
-            {role === "admin" ? (
+            {role === "sellingman" ? (
                 <Suspense fallback={<>Loading...</>}>
                     <SellingPage />
                 </Suspense>
             ) : null}
-            {role === "admin" ? (
+            {role === "copywriter" ? (
                 <Suspense fallback={<>Loading...</>}>
                     <CopyWritePage />
                 </Suspense>

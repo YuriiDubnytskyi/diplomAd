@@ -42,6 +42,7 @@ router.post("/createProductSubMain", async (req, res) => {
         isImg: req.body.isImg,
         imgSrc: req.body.imgSrc,
         imgFolder: req.body.imgFolder,
+        isGroup: req.body.isGroup,
     };
     const result = await createProductSubMain(productSubMain).then((data) =>
         data.err ? { err: true, errMess: data.errMess } : data
@@ -51,13 +52,14 @@ router.post("/createProductSubMain", async (req, res) => {
 
 router.post("/createProductInfo", async (req, res) => {
     console.log(req.body);
-    const { idSubProduct, name, price, shortInfo, image, info, imgFolder, producer, properties } = req.body;
+    const { idSubProduct, name, price, shortInfo, image, info, groupName, imgFolder, producer, properties } = req.body;
     const productList = {
         name,
         price,
         shortInfo,
         idSubProduct,
         imageMain: image[0],
+        groupName,
     };
 
     const productInfo = {
@@ -69,6 +71,7 @@ router.post("/createProductInfo", async (req, res) => {
         imgFolder,
         producer,
         properties: properties.properties,
+        groupName,
     };
 
     const storageInfo = {

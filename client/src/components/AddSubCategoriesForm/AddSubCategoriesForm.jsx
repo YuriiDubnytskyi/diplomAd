@@ -16,7 +16,6 @@ const AddSubCategoriesForm = (props) => {
                 onFinishFailed={props.onFinishFailed}
                 initialValues={{
                     imgFolder: "",
-                    groupName: "",
                 }}>
                 <div className="addsubcategories-labels">
                     <div className="addsubcategories-categorie">
@@ -71,9 +70,6 @@ const AddSubCategoriesForm = (props) => {
                             <Option value={true}>true</Option>
                         </Select>
                     </div>
-                    <Form.Item className="addsubcategorie-groupname" label="Group Name" name="groupName">
-                        <Input className="addsubcategorie-input" />
-                    </Form.Item>
                     <Form.Item>
                         <div className="addsubcategories-btn">
                             <Button loading={props.loading} type="primary" htmlType="submit">

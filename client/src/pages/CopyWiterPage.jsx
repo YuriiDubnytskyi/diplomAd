@@ -1,13 +1,22 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Layout } from "antd";
 import SiderBlock from "../components/Sider/SiderBlock";
 import { logout } from "./../store/actions/actionsUser";
+import { clearNewsManager } from "./../store/actions/actionNews";
 import { useDispatch } from "react-redux";
+import AddNews from "../container/AddNews/AddNews";
+import News from "../container/News/News";
+import NewsById from "../container/NewsById/NewsById";
+import { initNewsData } from "./../store/actions/actionNews";
+
 const { Content } = Layout;
 
 const CopyWriterPage = () => {
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(initNewsData());
+    }, []);
     const items = [
         {
             to: "/news",
@@ -22,7 +31,10 @@ const CopyWriterPage = () => {
         {
             name: "Вийти",
             isFunc: true,
-            func: useCallback(() => dispatch(logout())),
+            func: useCallback(() => {
+                dispatch(logout());
+                dispatch(clearNewsManager());
+            }),
         },
     ];
 
@@ -31,8 +43,15 @@ const CopyWriterPage = () => {
             <SiderBlock items={items} />
             <Layout className="site-layout" style={{ marginLeft: 200 }}>
                 <Content>
-                    <Route path="/news"></Route>
-                    <Route path="/addnews"></Route>
+                    <Route path="/news">
+                        <News />
+                    </Route>
+                    <Route path="/newsID/:id">
+                        <NewsById />
+                    </Route>
+                    <Route path="/addnews">
+                        <AddNews />
+                    </Route>
                     <Route path="/"></Route>
                 </Content>
             </Layout>

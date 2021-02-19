@@ -1,13 +1,22 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Layout } from "antd";
 import SiderBlock from "../components/Sider/SiderBlock";
 import { logout } from "./../store/actions/actionsUser";
 import { useDispatch } from "react-redux";
+import { clearSellingManager, initSellingData } from "./../store/actions/actionSelling";
+import SellingProducts from "./../container/SellingProducts/SellingProducts";
+import ArchiveProducts from "./../container/ArchiveProducts/ArchiveProducts";
+
 const { Content } = Layout;
 
 const SellingPage = () => {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initSellingData());
+    }, []);
+
     const items = [
         {
             to: "/selling",
@@ -22,7 +31,10 @@ const SellingPage = () => {
         {
             name: "Вийти",
             isFunc: true,
-            func: useCallback(() => dispatch(logout())),
+            func: useCallback(() => {
+                dispatch(logout());
+                dispatch(clearSellingManager());
+            }),
         },
     ];
 
@@ -31,8 +43,12 @@ const SellingPage = () => {
             <SiderBlock items={items} />
             <Layout className="site-layout" style={{ marginLeft: 200 }}>
                 <Content>
-                    <Route path="/selling"></Route>
-                    <Route path="/archives"></Route>
+                    <Route path="/selling">
+                        <SellingProducts />
+                    </Route>
+                    <Route path="/archives">
+                        <ArchiveProducts />
+                    </Route>
                     <Route path="/"></Route>
                 </Content>
             </Layout>

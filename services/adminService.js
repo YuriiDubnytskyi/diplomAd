@@ -21,7 +21,16 @@ const getRoles = async () => {
 const getUsers = async () => {
     try {
         const Users = userSchema;
-        const usersList = await Users.find({});
+        const usersList = await Users.aggregate([
+            {
+                $lookup: {
+                    from: "buyListSell",
+                    let: { userId: "$_id" },
+                    pipeline: [{ $match: { $expr: { $eq: ["$userId", "$$userId"] } } }],
+                    as: "buyProduct",
+                },
+            },
+        ]);
         return { err: false, data: usersList };
     } catch (error) {
         return { err: true, errMess: error };

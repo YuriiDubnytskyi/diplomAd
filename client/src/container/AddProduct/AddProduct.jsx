@@ -85,6 +85,7 @@ const AddProduct = () => {
                     imgFolder: info.name,
                     producer: info.producer,
                     properties,
+                    groupName: info.groupName,
                 },
                 idSubProduct
             )
