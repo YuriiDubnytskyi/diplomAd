@@ -27,7 +27,7 @@ const setArchive = (id, arr, arr2) => {
     return [...arr2, newArchive[0]];
 };
 
-const admin = (state = initialState, action) => {
+const selling = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SELLING_INIT:
             return updateObject(state, {
@@ -46,11 +46,13 @@ const admin = (state = initialState, action) => {
             return updateObject(state, {
                 switchStatusIsErr: true,
                 switchStatusErr: action.errMess,
+                switchStatusLoading: false,
             });
         case actionTypes.SWITCH_PRODUCT_SUCCESS:
             return updateObject(state, {
                 archive: setArchive(action.id, state.active, state.archive),
                 active: deleteActive(action.id, state.archive),
+                switchStatusLoading: false,
             });
         case actionTypes.CLEAR_SELLING:
             return updateObject(state, {
@@ -67,4 +69,4 @@ const admin = (state = initialState, action) => {
     }
 };
 
-export default admin;
+export default selling;

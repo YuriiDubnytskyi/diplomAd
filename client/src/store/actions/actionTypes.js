@@ -56,3 +56,16 @@ export const SWITCH_PRODUCT_FAIL = "SWITCH_PRODUCT_FAIL";
 export const SWITCH_PRODUCT_SUCCESS = "SWITCH_PRODUCT_SUCCESS";
 
 export const CLEAR_SELLING = "CLEAR_SELLING";
+
+export const NEWS_INIT = "NEWS_INIT";
+export const NEWS_INIT_FAIL = "NEWS_INIT_FAIL";
+
+export const ADD_NEWS = "ADD_NEWS";
+export const ADD_NEWS_FAIL = "ADD_NEWS_FAIL";
+export const ADD_NEWS_SUCCESS = "ADD_NEWS_SUCCESS";
+
+export const CLEAR_NEWS = "CLEAR_NEWS";
+
+export const DELETE_NEWS = "DELETE_NEWS";
+export const DELETE_NEWS_FAIL = "DELETE_NEWS_FAIL";
+export const DELETE_NEWS_SUCCESS = "DELETE_NEWS_SUCCESS";
