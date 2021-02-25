@@ -55,7 +55,7 @@ router.post("/createProductInfo", async (req, res) => {
     const { idSubProduct, name, price, shortInfo, image, info, groupName, imgFolder, producer, properties } = req.body;
     const productList = {
         name,
-        price,
+        price: Number(price),
         shortInfo,
         idSubProduct,
         imageMain: image[0],
@@ -65,7 +65,7 @@ router.post("/createProductInfo", async (req, res) => {
     const productInfo = {
         idProduct: "",
         name,
-        price,
+        price: Number(price),
         info,
         images: image,
         imgFolder,
@@ -104,13 +104,13 @@ router.delete("/deleteByTag/:tag", async (req, res) => {
 router.put("/changeProductInfo", async (req, res) => {
     const { idListProduct, price, shortInfo, info, producer, propertiesFinaly } = req.body;
     const productList = {
-        price,
+        price: Number(price),
         shortInfo,
     };
 
     const productInfo = {
         idProduct: idListProduct,
-        price,
+        price: Number(price),
         info,
         producer,
         properties: propertiesFinaly,

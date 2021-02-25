@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, InputNumber } from "antd";
 const { TextArea } = Input;
 const ChangeProductInfoForm = ({ form, onFinish, onFinishFailed, onReset, info }) => {
     return (
@@ -42,7 +42,7 @@ const ChangeProductInfoForm = ({ form, onFinish, onFinishFailed, onReset, info }
                                 message: "Please input price!",
                             },
                         ]}>
-                        <Input className="addproductinfo-input" />
+                        <InputNumber min={1} className="addproductinfo-input" />
                     </Form.Item>
 
                     <Form.Item

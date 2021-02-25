@@ -1,5 +1,5 @@
 import React from "react";
-import { TreeSelect, Form, Input, Button } from "antd";
+import { TreeSelect, Form, Input, Button, InputNumber } from "antd";
 
 const { TreeNode } = TreeSelect;
 const { TextArea } = Input;
@@ -67,7 +67,7 @@ const AddProductInfoForm = ({
                                 message: "Please input price!",
                             },
                         ]}>
-                        <Input className="addproductinfo-input" />
+                        <InputNumber min={1} className="addproductinfo-input" />
                     </Form.Item>
 
                     <Form.Item
