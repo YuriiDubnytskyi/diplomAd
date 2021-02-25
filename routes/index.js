@@ -1,4 +1,4 @@
-const userRoutes = require("./userRoutes");
+const analiticRoutes = require("./analiticRoute");
 const managerRoutes = require("./managerRouter");
 const adminRoutes = require("./adminRoute");
 const passportRoutes = require("./passportRouter");
@@ -10,6 +10,6 @@ module.exports = (app, passport) => {
     app.use("/api/manager", managerRoutes);
     app.use("/api/sellingmanager", sellingRoutes);
     app.use("/api/copywrite", copyWriterRoutes);
-    app.use("/api/analitic", userRoutes);
+    app.use("/api/analitic", analiticRoutes);
     app.use("/api/auth", passportRoutes(passport));
 };

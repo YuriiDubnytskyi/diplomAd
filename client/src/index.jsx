@@ -12,6 +12,7 @@ import admin from "./store/reducers/admin";
 import manager from "./store/reducers/manager";
 import selling from "./store/reducers/selling";
 import news from "./store/reducers/news";
+import analitic from "./store/reducers/analitic";
 
 const rootReducer = combineReducers({
     user,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     manager,
     selling,
     news,
+    analitic,
 });
 
 const logger = (store) => {

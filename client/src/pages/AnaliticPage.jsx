@@ -1,13 +1,21 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Layout } from "antd";
 import SiderBlock from "../components/Sider/SiderBlock";
 import { logout } from "./../store/actions/actionsUser";
+import { clearAnalitic, initAnaliticData } from "./../store/actions/actionAnalitic";
 import { useDispatch } from "react-redux";
+import Users from "../container/Users/Users";
+import ProductStatus from "../container/ProductStatus/ProductStatus";
+import Storage from "../container/Storage/Storage";
+
 const { Content } = Layout;
 
 const AnaliticPage = () => {
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(initAnaliticData());
+    }, []);
     const items = [
         {
             to: "/users",
@@ -20,14 +28,22 @@ const AnaliticPage = () => {
             isFunc: false,
         },
         {
-            to: "/products",
-            name: "Продукція",
+            to: "/statusproduct",
+            name: "Статус покупок",
+            isFunc: false,
+        },
+        {
+            to: "/bought",
+            name: "Здійсненні покупки",
             isFunc: false,
         },
         {
             name: "Вийти",
             isFunc: true,
-            func: useCallback(() => dispatch(logout())),
+            func: useCallback(() => {
+                dispatch(logout());
+                dispatch(clearAnalitic());
+            }),
         },
     ];
 
@@ -36,9 +52,16 @@ const AnaliticPage = () => {
             <SiderBlock items={items} />
             <Layout className="site-layout" style={{ marginLeft: 200 }}>
                 <Content>
-                    <Route path="/users"></Route>
-                    <Route path="/storage"></Route>
-                    <Route path="/products"></Route>
+                    <Route path="/users">
+                        <Users />
+                    </Route>
+                    <Route path="/storage">
+                        <Storage />
+                    </Route>
+                    <Route path="/statusproduct">
+                        <ProductStatus />
+                    </Route>
+                    <Route path="/bought"></Route>
                     <Route path="/"></Route>
                 </Content>
             </Layout>
