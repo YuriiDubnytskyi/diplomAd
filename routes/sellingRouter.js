@@ -26,7 +26,7 @@ router.post("/switch", async (req, res) => {
     const options = req.body.options;
     const result = await switchProduct(id).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
     const accessToken = oauth2Client.getAccessToken();
-    
+
     const transporter = nodemailer.createTransport({
         service: "gmail",
         // auth: {
@@ -54,6 +54,7 @@ router.post("/switch", async (req, res) => {
         <p>Hi we send you your products</p>
         <p>Name ${options.name}</p>
         <p>Adress ${options.adress}</p>
+        <p>Adress ${options.message}</p>
         <p>You Buy</p>
         ${options.products.map((el) => {
             return `
@@ -61,7 +62,7 @@ router.post("/switch", async (req, res) => {
                         <p>Name ${el.name}</p>
                         <p>Price ${el.price}</p>
                         <p>Count ${el.count}</p>
-                        <a href=http://localhost:3000/product/${el._id}/:FromMyBilling/:${el.name}>More</a>
+                        <a href=http://diplom-work-client.herokuapp.com/product/${el._id}/:FromMyBilling/:${el.name}>More</a>
                     </div>
                     `;
         })}

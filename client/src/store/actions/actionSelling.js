@@ -38,7 +38,7 @@ export const switchProductById = (id, options) => {
             if (res.data.err) {
                 dispatch(switchProductFail(res.data.errMess));
             } else {
-                dispatch(switchProductSuccess(id));
+                dispatch(switchProductSuccess(id, options.message));
             }
         });
     };
@@ -50,10 +50,11 @@ export const switchProductFail = (mess) => {
         mess,
     };
 };
-export const switchProductSuccess = (id) => {
+export const switchProductSuccess = (id, mess) => {
     return {
         type: actionTypes.SWITCH_PRODUCT_SUCCESS,
         id,
+        mess,
     };
 };
 export const switchProduct = () => {

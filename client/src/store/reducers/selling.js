@@ -22,10 +22,10 @@ const deleteActive = (id, arr) => {
     return arr.filter((el) => el._id != id);
 };
 
-const setArchive = (id, arr, arr2) => {
+const setArchive = (id, mess, arr, arr2) => {
     const newArchive = arr.filter((el) => el._id === id);
 
-    return [...arr2, { ...newArchive[0], status: "Success", isOld: true }];
+    return [...arr2, { ...newArchive[0], status: "Success", isOld: true, massege: mess }];
 };
 
 const selling = (state = initialState, action) => {
@@ -51,7 +51,7 @@ const selling = (state = initialState, action) => {
             });
         case actionTypes.SWITCH_PRODUCT_SUCCESS:
             return updateObject(state, {
-                archive: setArchive(action.id, state.active, state.archive),
+                archive: setArchive(action.id, action.mess, state.active, state.archive),
                 active: deleteActive(action.id, state.active),
                 switchStatusLoading: false,
             });

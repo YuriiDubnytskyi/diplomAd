@@ -89,8 +89,20 @@ router.post("/createProductInfo", async (req, res) => {
 router.put("/addCount", async (req, res) => {
     const id = req.body.id;
     const count = req.body.count;
+    const name = req.body.name;
 
-    const result = await addCount(id, count).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
+    const obj = {
+        status: "Pending",
+        idProduct: id,
+        productName: name,
+        needCount: count,
+        timeStart: new Date().toISOString(),
+        timeEnd: "",
+        message: "",
+        countGet: "",
+    };
+
+    const result = await addCount(obj).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));
     res.json(result);
 });
 

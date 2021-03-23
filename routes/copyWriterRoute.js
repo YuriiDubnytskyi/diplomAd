@@ -14,7 +14,7 @@ router.post("/addnews", async (req, res) => {
         shortDescription: req.body.shortDescription,
         fullDescription: req.body.fullDescription,
         imageMain: req.body.imageMain,
-        time: new Date(),
+        time: new Date().toISOString(),
     };
 
     const news = await addNews(newsData).then((data) => (data.err ? { err: true, errMess: data.errMess } : data));

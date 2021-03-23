@@ -1,5 +1,6 @@
 import React from "react";
 import "./Categories.scss";
+import { Popconfirm, Table } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import ManagerItem from "./../../components/ManagerItem/ManagerItem";
 import AddNewBtn from "./../../components/AddNewBtn/AddNewBtn";
@@ -19,19 +20,38 @@ const Categories = () => {
         dispatch(deleteProductMain(id, arr));
     };
 
+    const columns = [
+        {
+            title: "Title",
+            dataIndex: "productTitle",
+            key: "_id",
+        },
+        {
+            title: "Action",
+            key: "action",
+            render: (_, record) =>
+                products.fullProducts.length >= 1 ? (
+                    <Popconfirm title="Sure to delete?" onConfirm={() => deleteCategories(record._id)}>
+                        <a>Delete</a>
+                    </Popconfirm>
+                ) : null,
+        },
+    ];
+
     return (
         <div>
             <div className="categories__list">
-                {products.fullProducts
-                    ? products.fullProducts.map((el) => (
-                          <ManagerItem
-                              key={el._id}
-                              loading={products.deleteMainLoading}
-                              title={el.productTitle}
-                              del={() => deleteCategories(el._id)}
-                          />
-                      ))
-                    : null}
+                {products.fullProducts ? (
+                    <Table columns={columns} dataSource={products.fullProducts} />
+                ) : // ? products.fullProducts.map((el) => (
+                //       <ManagerItem
+                //           key={el._id}
+                //           loading={products.deleteMainLoading}
+                //           title={el.productTitle}
+                //           del={() => deleteCategories(el._id)}
+                //       />
+                //   ))
+                null}
             </div>
 
             <AddNewBtn link="addcategories" />

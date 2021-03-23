@@ -1,0 +1,14 @@
+.main__news {
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+
+    &-title {
+        font-size: 25px;
+        padding: 15px 0;
+    }
+
+    &-description {
+        padding: 15px;
+    }
+}

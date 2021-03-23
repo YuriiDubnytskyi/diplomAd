@@ -1,30 +1,31 @@
 import React from "react";
-import { InputNumber, Button, Form } from "antd";
+import { Button, Form, Input } from "antd";
+const { TextArea } = Input;
 
-const BuyCountForm = ({ count, id, addCount, onFinishFailed, name }) => {
+const SwitchSellingForm = ({ switchSelling, id, data, onFinishFailed }) => {
     return (
         <>
             <Form
                 className="addproductcount-block"
                 name="basic"
-                onFinish={(values) => addCount(values, count, id, name)}
+                onFinish={(values) => switchSelling(values, id, data)}
                 onFinishFailed={onFinishFailed}
                 initialValues={{}}>
                 <Form.Item
                     className="addproductinfo-title"
-                    label="Count"
-                    name="count"
+                    label="Message"
+                    name="message"
                     rules={[
                         {
                             required: true,
-                            message: "Please input count!",
+                            message: "Please input message!",
                         },
                     ]}>
-                    <InputNumber min={1} defaultValue={1} className="addproductcount-input" />
+                    <TextArea className="addproductcount-input" />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
-                        Замовити
+                        Підтвердити
                     </Button>
                 </Form.Item>
             </Form>
@@ -32,5 +33,5 @@ const BuyCountForm = ({ count, id, addCount, onFinishFailed, name }) => {
     );
 };
 
-BuyCountForm.whyDidYouRender = true;
-export default BuyCountForm;
+SwitchSellingForm.whyDidYouRender = true;
+export default SwitchSellingForm;

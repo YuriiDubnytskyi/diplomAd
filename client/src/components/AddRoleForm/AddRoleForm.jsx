@@ -46,6 +46,7 @@ const AddRoleForm = (props) => {
                             <Option value="analitic">analitic</Option>
                             <Option value="copywriter">copywriter</Option>
                             <Option value="sellingman">sellingman</Option>
+                            <Option value="storageworker">storageworker</Option>
                         </Select>
                     </div>
 

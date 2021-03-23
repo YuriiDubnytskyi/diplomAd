@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ResponsivePie } from "@nivo/pie";
 
 const ProductStatus = () => {
     const dataProduct = useSelector((state) => state.analitic.productsStatus);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const arr = [];
+        dataProduct.forEach((el) => {
+            arr.push({
+                id: el._id,
+                label: el._id,
+                value: el.count,
+            });
+        });
+        setData(arr);
+    }, []);
     return (
         <div style={{ height: 400 }}>
             <ResponsivePie
-                data={[
-                    {
-                        id: "Success",
-                        label: "Success",
-                        value: dataProduct.success,
-                    },
-                    {
-                        id: "Pending",
-                        label: "Pending",
-                        value: dataProduct.pending,
-                    },
-                ]}
+                data={data}
                 margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
                 innerRadius={0.5}
                 padAngle={0.7}

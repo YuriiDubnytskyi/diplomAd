@@ -11,11 +11,12 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // API.get("/user/isAuth").then((res) => {
-        //     if (res.data.status == 200) {
-        //         dispatch(addUserSuccess(res.data.user));
-        //     }
-        // });
+        API.get("/admin/isAuth").then((res) => {
+            if (res.data.status == 200) {
+                console.log(res.data);
+            }
+        });
+
         console.log(process.env.REACT_APP_SERVER_API);
     }, []);
 

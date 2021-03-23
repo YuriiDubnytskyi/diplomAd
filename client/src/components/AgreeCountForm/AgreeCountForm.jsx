@@ -1,15 +1,28 @@
 import React from "react";
-import { InputNumber, Button, Form } from "antd";
+import { InputNumber, Button, Form, Input } from "antd";
+const { TextArea } = Input;
 
-const BuyCountForm = ({ count, id, addCount, onFinishFailed, name }) => {
+const AgreeCountForm = ({ id, idStorageHouse, addCount, onFinishFailed }) => {
     return (
         <>
             <Form
                 className="addproductcount-block"
                 name="basic"
-                onFinish={(values) => addCount(values, count, id, name)}
+                onFinish={(values) => addCount(id, idStorageHouse, values)}
                 onFinishFailed={onFinishFailed}
                 initialValues={{}}>
+                <Form.Item
+                    className="addproductinfo-title"
+                    label="Message"
+                    name="message"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input message!",
+                        },
+                    ]}>
+                    <TextArea className="addproductcount-input" />
+                </Form.Item>
                 <Form.Item
                     className="addproductinfo-title"
                     label="Count"
@@ -24,7 +37,7 @@ const BuyCountForm = ({ count, id, addCount, onFinishFailed, name }) => {
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
-                        Замовити
+                        Підтвердити
                     </Button>
                 </Form.Item>
             </Form>
@@ -32,5 +45,5 @@ const BuyCountForm = ({ count, id, addCount, onFinishFailed, name }) => {
     );
 };
 
-BuyCountForm.whyDidYouRender = true;
-export default BuyCountForm;
+AgreeCountForm.whyDidYouRender = true;
+export default AgreeCountForm;

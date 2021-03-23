@@ -113,9 +113,9 @@ const getStorage = async () => {
 const getProductsStatus = async () => {
     try {
         const Buy = buyListSellSchema;
-        const data1 = await Buy.find({ status: "Success" }).countDocuments();
-        const data2 = await Buy.find({ status: "Pending" }).countDocuments();
-        return { err: false, data: { success: data1, pending: data2 } };
+        const data = await Buy.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]);
+
+        return { err: false, data };
     } catch (error) {
         return { err: true, errMess: error };
     }

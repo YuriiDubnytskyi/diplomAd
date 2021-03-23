@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { List, Card, Button } from "antd";
+import { Table, Popconfirm } from "antd";
 import "./AdminRoles.scss";
 import { useDispatch } from "react-redux";
 import { deleteRole } from "./../../store/actions/actionAdmin";
@@ -10,31 +10,38 @@ const AdminRoles = ({ roles }) => {
         dispatch(deleteRole(id));
     };
 
+    const columns = [
+        {
+            title: "Role",
+            dataIndex: "role",
+            key: "role",
+        },
+        {
+            title: "Login field",
+            dataIndex: "login",
+            key: "login",
+        },
+        {
+            title: "Password",
+            dataIndex: "message",
+            key: "message",
+            render: (text) => <>{text || "password"}</>,
+        },
+        {
+            title: "Action",
+            key: "action",
+            render: (_, record) =>
+                roles.length >= 1 ? (
+                    <Popconfirm title="Sure to delete?" onConfirm={() => deleteRoleByID(record._id)}>
+                        <a>Delete</a>
+                    </Popconfirm>
+                ) : null,
+        },
+    ];
+
     return (
         <div className="role__list">
-            <List
-                grid={{
-                    gutter: 12,
-                    xs: 1,
-                    sm: 2,
-                    md: 4,
-                    lg: 4,
-                    xl: 6,
-                    xxl: 3,
-                }}
-                dataSource={roles}
-                renderItem={(item) => (
-                    <List.Item>
-                        <Card
-                            className="card__role role"
-                            title={item.role}
-                            actions={[<Button onClick={() => deleteRoleByID(item._id)}>Delete</Button>]}>
-                            <p className="role-login">{item.login}</p>
-                            <p className="role-password">{item.message || "password"}</p>
-                        </Card>
-                    </List.Item>
-                )}
-            />
+            <Table columns={columns} dataSource={roles} />
         </div>
     );
 };

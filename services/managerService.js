@@ -3,7 +3,7 @@ const productSubTitleSchema = require("../models/productSubMain");
 const productListSchema = require("../models/productList");
 const wereHouseSchema = require("../models/wereHouse");
 const productInfoSchema = require("../models/productInfo");
-const userSchema = require("../models/users");
+const storageWorkerSchema = require("../models/storageWorker");
 const newsSchema = require("../models/news");
 const buyListSellSchema = require("../models/buyList");
 const userAdminSchema = require("../models/userAdmin");
@@ -98,14 +98,10 @@ const createProductList = async (productList, productInfo, storageInfo) => {
     }
 };
 
-const addCount = async (id, count) => {
+const addCount = async (obj) => {
     try {
-        const wereHouse = wereHouseSchema;
-        let storage = await wereHouse.findOneAndUpdate(
-            { idStorageHouse: id },
-            { count: count },
-            { new: true, useFindAndModify: false }
-        );
+        const storageWorker = new storageWorkerSchema(obj);
+        let storage = await storageWorker.save();
         return { err: false, storage };
     } catch (error) {
         return { err: true, errMess: error };
