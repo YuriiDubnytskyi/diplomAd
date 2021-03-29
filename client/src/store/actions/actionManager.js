@@ -137,7 +137,7 @@ export const addCountProduct = (dataA) => {
             if (res.data.err) {
                 dispatch(addCountFail(res.data.errMess));
             } else {
-                dispatch(addCountSuccess(dataA.id, dataA.count));
+                dispatch(addCountSuccess());
             }
         });
     };
@@ -148,11 +148,9 @@ export const addCount = () => {
         type: actionTypes.ADD_COUNT,
     };
 };
-export const addCountSuccess = (id, count) => {
+export const addCountSuccess = () => {
     return {
         type: actionTypes.ADD_COUNT_SUCCESS,
-        id,
-        count,
     };
 };
 export const addCountFail = (mess) => {

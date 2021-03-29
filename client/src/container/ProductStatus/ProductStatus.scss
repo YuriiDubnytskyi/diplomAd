@@ -1,0 +1,36 @@
+.status__chart {
+    width: 90%;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+
+    .info__box {
+        max-width: 50%;
+        background-color: #ffffff;
+        border-radius: 20px;
+        padding: 10px;
+        height: 150px;
+
+        &-title {
+            font-size: 20px;
+            padding-bottom: 15px;
+        }
+    }
+
+    &-analitic {
+        height: 400px;
+        width: 50%;
+    }
+}
+
+.statusTime__chart {
+    width: 90%;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+
+    &-analitic {
+        height: 400px;
+        width: 50%;
+    }
+}

@@ -193,7 +193,7 @@ const manager = (state = initialState, action) => {
             return updateObject(state, {
                 addCountErr: false,
                 addCountLoading: false,
-                fullProducts: setCount(action.id, action.count, state.fullProducts),
+                //fullProducts: setCount(action.id, action.count, state.fullProducts),
             });
 
         case actionTypes.CHANGE_PRODUCT:

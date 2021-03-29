@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Image } from "antd";
+import { Image, PageHeader } from "antd";
 import "./NewsById.scss";
 
 const NewsById = () => {
@@ -10,9 +10,7 @@ const NewsById = () => {
 
     return (
         <div className="main__news">
-            <div className="main__news-time">
-                <span>{news[0].time}</span>
-            </div>
+            <PageHeader ghost={false} onBack={() => window.history.back()} title="Назад"></PageHeader>
             <h2 className="main__news-title">{news[0].title}</h2>
             <div className="main__news-info">
                 <Image src={news[0].imageMain} width={300} />

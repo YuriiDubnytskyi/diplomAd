@@ -1,41 +1,33 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { InputNumber, Button, Form } from "antd";
 
-const BuyCountForm = ({ count, id, title, addCount, onFinishFailed }) => {
+const BuyCountForm = ({ count, id, addCount, onFinishFailed, name }) => {
     return (
         <>
-            <div className="item__container">
-                <h2 className="item-title">{title}</h2>
-                <h3 className="item-title">{count}</h3>
-                <Form
-                    className="addproductcount-block"
-                    name="basic"
-                    onFinish={(values) => addCount(values, count, id)}
-                    onFinishFailed={onFinishFailed}
-                    initialValues={{}}>
-                    <div className="addproductcount-labels">
-                        <Form.Item
-                            className="addproductinfo-title"
-                            label="Product Name"
-                            name="count"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input count!",
-                                },
-                            ]}>
-                            <Input className="addproductcount-input" />
-                        </Form.Item>
-                        <Form.Item>
-                            <div className="addproductcount-btn">
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            </div>
-                        </Form.Item>
-                    </div>
-                </Form>
-            </div>
+            <Form
+                className="addproductcount-block"
+                name="basic"
+                onFinish={(values) => addCount(values, count, id, name)}
+                onFinishFailed={onFinishFailed}
+                initialValues={{}}>
+                <Form.Item
+                    className="addproductinfo-title"
+                    label="Count"
+                    name="count"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input count!",
+                        },
+                    ]}>
+                    <InputNumber min={1} defaultValue={1} className="addproductcount-input" />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Замовити
+                    </Button>
+                </Form.Item>
+            </Form>
         </>
     );
 };

@@ -7,6 +7,7 @@ const ManagerPage = React.lazy(() => import("./ManagerPage"));
 const AnaliticPage = React.lazy(() => import("./AnaliticPage"));
 const SellingPage = React.lazy(() => import("./SellingPage"));
 const CopyWritePage = React.lazy(() => import("./CopyWiterPage"));
+const StorageWorker = React.lazy(() => import("./StorageWorker"));
 
 const Main = () => {
     const role = useSelector((state) => state.user.role);
@@ -41,6 +42,11 @@ const Main = () => {
             {role === "copywriter" ? (
                 <Suspense fallback={<>Loading...</>}>
                     <CopyWritePage />
+                </Suspense>
+            ) : null}
+            {role === "storageworker" ? (
+                <Suspense fallback={<>Loading...</>}>
+                    <StorageWorker />
                 </Suspense>
             ) : null}
         </Switch>

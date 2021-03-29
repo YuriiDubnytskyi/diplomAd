@@ -35,11 +35,11 @@ const admin = (state = initialState, action) => {
             });
         case actionTypes.CLEAR_ADMIN:
             return updateObject(state, {
-                role: "",
-                loading: false,
-                err: false,
-                errMess: "",
-                success: false,
+                roles: [],
+                users: [],
+                products: [],
+                error: [],
+                deleteRoleMess: "",
             });
 
         default:
