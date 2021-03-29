@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import Users from "../container/Users/Users";
 import ProductStatus from "../container/ProductStatus/ProductStatus";
 import Storage from "../container/Storage/Storage";
+import BoughtProducts from "../container/BoughtProducts/BoughtProducts";
+import BoughtTop from "../container/BoughtTop/BoughtTop";
 
 const { Content } = Layout;
 
@@ -38,6 +40,11 @@ const AnaliticPage = () => {
             isFunc: false,
         },
         {
+            to: "/boughtTop",
+            name: "Топ продукти",
+            isFunc: false,
+        },
+        {
             name: "Вийти",
             isFunc: true,
             func: useCallback(() => {
@@ -61,7 +68,12 @@ const AnaliticPage = () => {
                     <Route path="/statusproduct">
                         <ProductStatus />
                     </Route>
-                    <Route path="/bought"></Route>
+                    <Route path="/bought">
+                        <BoughtProducts />
+                    </Route>
+                    <Route path="/boughtTop">
+                        <BoughtTop />
+                    </Route>
                     <Route path="/"></Route>
                 </Content>
             </Layout>

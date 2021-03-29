@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ResponsiveBar } from "@nivo/bar";
-import { ResponsiveSunburst } from "@nivo/sunburst";
 import { Select } from "antd";
 import { ResponsivePie } from "@nivo/pie";
+import "./Storage.scss";
+import StorageChart from "./../../components/StorageChart/StorageChart";
+
 const { Option } = Select;
 
 const Storage = () => {
@@ -47,42 +49,34 @@ const Storage = () => {
         setAllDataTitle(data);
         setAllDataTitleBar(dataBar);
         setLoadingTitle(false);
-        console.log(dataBar);
     };
+
     return (
-        <div style={{ height: 400 }}>
-            {!loading ? (
-                <>
-                    <ResponsiveSunburst
-                        data={allData}
-                        margin={{ top: 40, right: 20, bottom: 20, left: 20 }}
-                        id="name"
-                        value="count"
-                        cornerRadius={2}
-                        borderWidth={1}
-                        borderColor="white"
-                        colors={{ scheme: "nivo" }}
-                        childColor={{ from: "color" }}
-                        animate={false}
-                        motionConfig="gentle"
-                        isInteractive={true}
-                        tooltip={function (e) {
-                            console.log(e);
-                            return (
-                                <>
-                                    <p>Name - {e.data.name}</p>
-                                    <p>Value - {e.value}</p>
-                                    <p>Persent - {e.formattedValue}</p>
-                                </>
-                            );
-                        }}
-                    />
-                    <Select style={{ width: 120 }} onChange={handleChange}>
+        <div className="storage__container">
+            <div className="storage__main-chart">
+                <div className="storage__container-info info__box">
+                    <h2 className="info__box-title">Інформація</h2>
+                    <p className="info__box-text">
+                        Ви можете дізнатись скільки є товарів на складі, яке їх число і відсоток.
+                        <br />
+                        Також ви можете переглянути інформіцію про конкретну категорію товару.
+                    </p>
+                </div>
+                <div className="storage__chart">{!loading ? <StorageChart allData={allData} /> : null}</div>
+            </div>
+            <div className="storage__submain-info">
+                <p className="submain-info__text">Виберіть будь ласка категорію щоб побачити статистику.</p>
+                {!loading ? (
+                    <Select style={{ width: 220 }} onChange={handleChange}>
                         {allData.children.map((el) =>
                             el.children.map((el) => <Option value={el.name}>{el.name}</Option>)
                         )}
                     </Select>
+                ) : null}
+            </div>
 
+            {!loading ? (
+                <>
                     {!loadingTitle ? (
                         <>
                             <div style={{ height: 400 }}>
@@ -116,10 +110,11 @@ const Storage = () => {
                                     ]}
                                 />
                             </div>
-                            <div style={{ height: 400 }}>
+                            <div style={allDataTitleBar.length > 15 ? { height: 600 } : { height: 300 }}>
                                 <ResponsiveBar
                                     data={allDataTitleBar}
                                     keys={["value"]}
+                                    enableGridX={true}
                                     indexBy="label"
                                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
                                     padding={0.3}
@@ -147,20 +142,6 @@ const Storage = () => {
                                             spacing: 10,
                                         },
                                     ]}
-                                    fill={[
-                                        {
-                                            match: {
-                                                id: "fries",
-                                            },
-                                            id: "dots",
-                                        },
-                                        {
-                                            match: {
-                                                id: "sandwich",
-                                            },
-                                            id: "lines",
-                                        },
-                                    ]}
                                     borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
                                     axisTop={null}
                                     axisRight={null}
@@ -168,7 +149,7 @@ const Storage = () => {
                                         tickSize: 5,
                                         tickPadding: 5,
                                         tickRotation: 0,
-                                        legend: "country",
+                                        legend: "count",
                                         legendPosition: "middle",
                                         legendOffset: 32,
                                     }}
@@ -176,7 +157,7 @@ const Storage = () => {
                                         tickSize: 5,
                                         tickPadding: 5,
                                         tickRotation: 0,
-                                        legend: "food",
+                                        legend: "",
                                         legendPosition: "middle",
                                         legendOffset: -40,
                                     }}

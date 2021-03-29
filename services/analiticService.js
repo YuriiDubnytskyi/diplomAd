@@ -121,6 +121,59 @@ const getProductsStatus = async () => {
     }
 };
 
+const getProductsTop = async () => {
+    try {
+        const Buy = buyListSellSchema;
+        const data1 = await Buy.aggregate([
+            {
+                $match: { status: "Success" },
+            },
+            { $project: { _id: 1, time: 1, product: 1 } },
+            { $unwind: "$product" },
+            {
+                $group: {
+                    _id: { sub: "$product.idSubProduct", make: "$product.name", id: "$product._id" },
+                    count: { $sum: "$product.count" },
+                    price: { $sum: "$product.price" },
+                },
+            },
+            {
+                $group: {
+                    _id: "$_id.sub",
+                    total: { $sum: "$count" },
+                    totalSaleAmount: { $sum: { $multiply: ["$price", "$count"] } },
+                    byBrand: { $push: { k: "$_id.make", v: { $sum: "$count" } } },
+                    byId: { $push: { k: "$_id.make", v: "$_id.id" } },
+                },
+            },
+            { $sort: { _id: 1 } },
+            {
+                $project: {
+                    _id: "$_id",
+                    totalSold: "$total",
+                    totalSaleAmount: "$totalSaleAmount",
+                    byBrand: { $arrayToObject: { $filter: { input: "$byBrand", cond: "$$this.v" } } },
+                    byId: { $arrayToObject: { $filter: { input: "$byId", cond: "$$this.v" } } },
+                },
+            },
+        ]);
+        const subProduct = productSubTitleSchema;
+        const data2 = await subProduct.find({}, { productSubTitle: 1, _id: 1 });
+        const data = data1.map((el) => {
+            for (let i = 0; i < data2.length; i++) {
+                if (el._id == data2[i]._id) {
+                    return { ...el, subTitle: data2[i].productSubTitle };
+                }
+            }
+        });
+
+        return { err: false, data };
+    } catch (error) {
+        console.log(error);
+        return { err: true, errMess: error };
+    }
+};
+
 const getProductsBought = async (start, end) => {
     try {
         const Storage = buyListSellSchema;
@@ -158,11 +211,27 @@ const getProductsBought = async (start, end) => {
                 },
             },
         ]);
-        console.log(data);
         return { err: false, data };
     } catch (error) {
         return { err: true, errMess: error };
     }
 };
 
-module.exports = { getStorage, getUsers, getProductsStatus, getProductsBought };
+const getBoughtByDate = async (start, end) => {
+    try {
+        const Buy = buyListSellSchema;
+        let startDate = new Date(start);
+        let endDate = new Date(end);
+        const data = await Buy.aggregate([
+            {
+                $match: { time: { $gte: startDate, $lt: endDate } },
+            },
+            { $group: { _id: "$status", count: { $sum: 1 } } },
+        ]);
+        console.log(data);
+        return { err: false, data };
+    } catch (error) {
+        return { err: true, errMess: error };
+    }
+};
+module.exports = { getStorage, getUsers, getProductsStatus, getProductsBought, getBoughtByDate, getProductsTop };

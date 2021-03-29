@@ -1,0 +1,28 @@
+.storage__container {
+    width: 90%;
+    margin: 50px auto;
+    .storage__main-chart {
+        display: flex;
+        justify-content: space-between;
+
+        .storage__chart {
+            width: 50%;
+        }
+        .info__box {
+            max-width: 50%;
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 10px;
+            height: 150px;
+
+            &-title {
+                font-size: 20px;
+                padding-bottom: 15px;
+            }
+        }
+    }
+
+    .storage__submain-chart {
+        min-height: 400px;
+    }
+}
