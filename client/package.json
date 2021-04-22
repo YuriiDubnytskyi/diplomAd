@@ -35,7 +35,8 @@
     "build": "react-scripts build",
     "test1": "react-scripts test",
     "eject": "react-scripts eject",
-    "test": "jest",
+
+    "test": "cypress run",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
