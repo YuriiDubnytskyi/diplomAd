@@ -30,7 +30,7 @@ const news = (state = initialState, action) => {
             return updateObject(state, {
                 addNewsIsErr: true,
                 addNewsLoading: false,
-                addNewsErr: action.errMess,
+                addNewsErr: action.mess,
             });
         case actionTypes.ADD_NEWS_SUCCESS:
             return updateObject(state, {
@@ -45,7 +45,7 @@ const news = (state = initialState, action) => {
             return updateObject(state, {
                 deleteNewsIsErr: true,
                 deleteNewsLoading: false,
-                deleteNewsErr: action.errMess,
+                deleteNewsErr: action.mess,
             });
         case actionTypes.DELETE_NEWS_SUCCESS:
             return updateObject(state, {

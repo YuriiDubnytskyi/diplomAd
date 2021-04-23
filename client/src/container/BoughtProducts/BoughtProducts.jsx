@@ -32,22 +32,43 @@ const BoughtProducts = () => {
         });
 
         const arr2 = [];
-        for (let i = 0; i < arr.length; i++) {
-            if (arr.length === 0) {
-                break;
-            }
-            if (i + 1 < arr.length && arr[i].day === arr[i + 1].day) {
-                arr2.push({
-                    day: arr[i].day,
-                    totalSaleAmount: arr[i].totalSaleAmount + arr[i + 1].totalSaleAmount,
-                    dataBrand: arr[i].dataBrand.concat(arr[i + 1].dataBrand),
-                    value: arr[i].value + arr[i + 1].value,
-                });
-                i += 1;
-            } else {
-                arr2.push(arr[i]);
-            }
+        debugger;
+        console.log(arr);
+
+        const groupBy = (array, key) => {
+            return array.reduce((result, currentItem) => {
+                (result[currentItem[key]] = result[currentItem[key]] || []).push(currentItem);
+                return result;
+            }, {});
+        };
+        let gro = groupBy(arr, "day");
+
+        for (const property in gro) {
+            arr2.push({
+                day: property,
+                totalSaleAmount: gro[property].reduce((a, b) => a + b.totalSaleAmount, 0),
+                dataBrand: gro[property].reduce((a, b) => [...a, ...b.dataBrand], []),
+                value: gro[property].reduce((a, b) => a + b.value, 0),
+            });
+            console.log(`${property}: ${gro[property]}`);
         }
+        // for (let i = 0; i < arr.length; i++) {
+        //     if (arr.length === 0) {
+        //         break;
+        //     }
+
+        //     // if (i + 1 < arr.length && arr[i].day === arr[i + 1].day) {
+        //     //     arr2.push({
+        //     //         day: arr[i].day,
+        //     //         totalSaleAmount: arr[i].totalSaleAmount + arr[i + 1].totalSaleAmount,
+        //     //         dataBrand: arr[i].dataBrand.concat(arr[i + 1].dataBrand),
+        //     //         value: arr[i].value + arr[i + 1].value,
+        //     //     });
+        //     //     i += 1;
+        //     // } else {
+        //     //     arr2.push(arr[i]);
+        //     // }
+        // }
         setDataByTime(arr2);
     }, [dataBoughtByTime]);
 
@@ -67,12 +88,13 @@ const BoughtProducts = () => {
 
     const onSetDay = (e, d) => {
         let arr = [];
-        e.data.dataBrand.map((el) => {
+        e.data.dataBrand.map((el, i) => {
             for (const [key, value] of Object.entries(el)) {
                 arr.push(`${key}: ${value}`);
             }
         });
         e.data.boughtPro = [...arr];
+        console.log(e.data);
         setDataDay(e.data);
     };
 
