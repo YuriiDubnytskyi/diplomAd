@@ -53,6 +53,10 @@ const AddProduct = () => {
         setIdSubProduct(value);
     };
     const setImage = () => {
+        if (imagesArray.length === 0) {
+            dispatch(addProductFail("Please Add Photos"));
+            return;
+        }
         let arr = [];
         let data;
         imagesArray.forEach(async (el) => {

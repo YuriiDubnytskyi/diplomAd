@@ -33,6 +33,10 @@ const AddNews = () => {
 
     const onFinish = async (values) => {
         console.log("Success:", values);
+        if (imagesArray.length === 0) {
+            dispatch(addNewsFail("Please Add Photos"));
+            return;
+        }
         const imgSrc = await setImage(imagesArray);
         dispatch(
             addNewNews({
